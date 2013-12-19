@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 gem 'sinatra'
 gem 'dragonfly'
-gem 'rmagick'
+gem 'rmagick', :require => 'RMagick'
 gem 'data_mapper'
 
 group :production do
