@@ -38,3 +38,17 @@ get "/:slug/log" do |slug|
   logs.each {|l| data << l['data'].gsub("\n", "<br/>")}
   "#{data.join("<br/>")}"
 end
+
+#remove all logs
+delete "/:slug/destroy" do |slug|
+  logs = ImageLogger.all(:slug => slug)
+  logs.destroy
+  redirect "/#{slug}/log"
+end
+
+#remove the last log
+delete "/:slug/remove" do |slug|
+  log = ImageLogger.last(:slug => slug)
+  log.destroy
+  redirect "/#{slug}/log"
+end

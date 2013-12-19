@@ -12,9 +12,17 @@ http://cache-logger.herokuapp.com/change-me-to-anything
 To check the logs without opening the image, append a /log to the end:
 http://cache-logger.herokuapp.com/change-me-to-anything/log
 
+You can also do */destroy* to delete all logs from an image and */remove* to delete the last log, but will have to make those calls using curl:
+
+    curl -X DELETE http://cache-logger.herokuapp.com/change-me-to-anything/destroy
+    curl -X DELETE http://cache-logger.herokuapp.com/change-me-to-anything/remove
+
 ## Setup your own instance
 
+Assuming you have git, ruby, bundler, and heroku setup... you can simply do:
+
     git clone https://github.com/kale/image-cache-logger
+    cd image-cache-logger
     bundle install
     heroku create
     git push heroku master
