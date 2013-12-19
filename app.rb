@@ -21,7 +21,7 @@ end
 DataMapper.auto_upgrade!
 
 get '/' do
-  "Hello!"
+  "Create an image by just a string after the url."
 end
 
 get "/:slug" do |slug|
@@ -30,4 +30,11 @@ get "/:slug" do |slug|
   data = []
   logs.each {|l| data << l['data']}
   Dragonfly.app.generate(:text, data.join("\n"), "font-size" => 16).to_response(env)
+end
+
+get "/:slug/log" do |slug|
+  logs = ImageLogger.all(:slug => slug)
+  data = []
+  logs.each {|l| data << l['data'].gsub("\n", "<br/>")}
+  "#{data.join("<br/>")}"
 end
