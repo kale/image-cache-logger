@@ -25,11 +25,19 @@ get '/' do
 end
 
 get "/:slug" do |slug|
+  background_colors = %w(#EEEEEE #F2F2F2 #F5B7AB #EE836E #FFE8AA #FEDE88 #C5E5DE #95D1C4 #B1E0EC #6DC5DC)
+
   ImageLogger.create(:slug => slug, :data => "#{Time.now.to_s}\n#{request.user_agent}\n#{request.ip}\n", :created_at => Time.now)
   logs = ImageLogger.all(:slug => slug)
   data = []
   logs.each {|l| data << l['data']}
-  Dragonfly.app.generate(:text, data.join("\n"), "font-size" => 16).to_response(env)
+  Dragonfly.app.generate(
+    :text,
+    "#{slug}\n\n#{data.join("\n")}",
+    "font-size" => 14,
+    "padding" => '10',
+    "background-color" => background_colors[rand(background_colors.count)]
+  ).to_response(env)
 end
 
 get "/:slug/log" do |slug|
